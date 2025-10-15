@@ -38,10 +38,15 @@
       name:
         - nc
         - git
-        - python2-pip
+        - python3-pip
       state: present
       lock_timeout: 300
 
+  - name: remove requests
+    ansible.builtin.package:
+      name: python3-requests
+      state: absent
+      
   - name: Install Python libraries with pip
     become: yes
     pip:
@@ -49,7 +54,9 @@
 
   - name: Install Docker
     become: yes
-    shell: "amazon-linux-extras install -y docker"
+    yum:
+      name:
+        - docker
 
   - name: Enable and start Docker
     become: yes
@@ -69,5 +76,4 @@
   # common docker network
   - name: Create docker network
     become: true
-    docker_network:
-      name: traccar
+    shell: "docker network add traccar"
