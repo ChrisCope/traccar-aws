@@ -76,4 +76,4 @@
   # common docker network
   - name: Create docker network
     become: true
-    shell: "docker network add traccar"
+    shell: "docker network create traccar"
